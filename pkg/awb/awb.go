@@ -2,6 +2,7 @@ package awb
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -33,6 +34,10 @@ func (f *Fetcher) Fetch() ([]Date, error) {
 	response, err := http.Get(url)
 	if err != nil {
 		return []Date{}, err
+	}
+
+	if response.StatusCode != http.StatusOK {
+		return []Date{}, errors.New(fmt.Sprintf("AWB Response with error code %d", response.StatusCode))
 	}
 
 	bodyBytes, err := io.ReadAll(response.Body)
