@@ -83,13 +83,12 @@ func main() {
 				awbType = "Unbekannt"
 			}
 
-			theDate, err := time.Parse("02/01/2006", fmt.Sprintf("%02d/%02d/%04d", date.Day, date.Month, date.Year))
 			if err != nil {
 				log.Println("Could not parse date", err)
 				_, _ = bot.Send(telegram.NewMessage(update.Message.Chat.ID, "Could not process request"))
 				return
 			}
-			messageParts = append(messageParts, fmt.Sprintf("%s\t%s", theDate.Format("Mon 02. Jan 2006"), awbType))
+			messageParts = append(messageParts, fmt.Sprintf("%s\t%s", date.Date.Format("Mon 02. Jan 2006"), awbType))
 			cnt++
 		}
 
